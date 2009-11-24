@@ -1,0 +1,11 @@
+$def with (found, name, start_time, end_time)
+<?xml version="1.0"?>
+<shows>
+    <show>
+        <found>$found</found>
+        <name>$name</name>
+        <start>$start_time</start>
+        <end>$end_time</end>
+    </show>
+</shows>
+

@@ -1,0 +1,25 @@
+$def with (form)
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta content="See what's playing right now on your favorite channel." name="description">
+    <title>What's On?</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js" type="text/javascript"></script>
+    <script src="/static/js/main.js" type="text/javascript"></script>
+
+<body onload="set_focus()">
+    <form id="show" class="standard_form" method="post" action="submit" onsubmit="query_shows(); return false">
+        <p><img id="tv" src="/static/images/television.jpg" width="240" height="173" alt="tv"></p>
+        <p>What's on $:form.channel.render() in the $:form.timezone.render() timezone? <input id="search" class="btn" type="button" tabindex="3" value="Search" onclick="query_shows()"></p>
+    </form>
+    <div id="response"></div>
+    <div id="footer">
+        Created by <a href="mailto:ander1dw@gmail.com">Derek Anderson</a>. 
+        Image by <a href="http://paulussebastian.deviantart.com/gallery/#Stocks-Misc">paulussebastian</a>.
+    </div>
+</body>
+</html>
