@@ -11,7 +11,6 @@ urls = (
 )
 app = web.application(urls, globals())
 
-
 TIMEZONES = [
     ('eastern', 'Eastern'),
     ('central', 'Central'),
