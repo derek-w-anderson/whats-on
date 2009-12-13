@@ -2,36 +2,39 @@
 import web
 from web import form
 
-urls = (
-    '/', 'index',
-    '/query/([^/]+)/(.+)', 'xml_generator')
-app = web.application(urls, globals())
-
 render = web.template.render('templates/')
 db = web.database(dbn='postgres', db='whatson', user='shinra', pw='')
 
-showform = form.Form(
-    form.Textbox('channel', 
-        form.notnull,
-        id="channel",
-        value="Comedy Central",
-        tabindex="1",
-        size=20),
-    form.Dropdown('timezone', [
-        ('eastern','Eastern'), 
-        ('central','Central'), 
-        ('mountain','Mountain'), 
-        ('pacific','Pacific')],
-        tabindex="2"))
+urls = (
+    '/', 'index',
+    '/query/([^/]+)/(.+)', 'xml_generator'
+)
+app = web.application(urls, globals())
+
+
+TIMEZONES = [
+    ('eastern', 'Eastern'),
+    ('central', 'Central'),
+    ('mountain', 'Mountain'),
+    ('pacific', 'Pacific')
+]
+show_form = form.Form(
+    form.Textbox('channel', form.notnull, value="Comedy Central", tabindex="1", size=20),
+    form.Dropdown('timezone', TIMEZONES, tabindex="2")
+)
 
 class index:
-
+    """
+    Renders main page of the app. 
+    """
     def GET(self):
-        form = showform()
+        form = show_form()
         return render.index(form)
 
 class xml_generator:
-
+    """
+    Generates XML data for AJAX requests sent from the index page. 
+    """
     def GET(self, channel, timezone):
         web.header('Content-Type', 'text/xml')
         channel = channel.lower()
@@ -46,10 +49,8 @@ class xml_generator:
                 if shows:
                     show = shows[0]
                     return render.result("true", show.name.replace(" s ","\'s "), show.start_time, show.end_time)           
-                else:
-                    return render.result("false", "", "", "")
-            else: 
-                return render.result("false", "", "", "")
+
+            return render.result("false", "", "", "")
                     
     def get_shows(self, channel, timezone):  
         shows = db.query(
